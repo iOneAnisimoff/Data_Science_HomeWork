@@ -1,0 +1,77 @@
+import scala.collection.mutable.ListBuffer
+import scala.io.StdIn.readDouble
+
+
+object App {
+
+  def main (args: Array[String]): Unit = {
+
+    var greeting = "Hello, Scala!"
+
+    println (greeting)
+    println (greeting.reverse)
+    println (greeting.toLowerCase)
+    println (greeting.replace("!" , "") )
+    println (greeting +  " and goodbye python!" )
+
+// Вычисляем ежемесячный оклад
+
+    println ("Введите годовой доход:")
+    val yearSalary = readDouble()
+    println ("Размер премии в процентах:")
+    val bonus = readDouble()
+    println ("Введите сумму компенсации питания:")
+    val eatBonus = readDouble()
+    val monthSalary = ((yearSalary + (yearSalary * bonus / 100) + eatBonus) * 0.87) / 12
+    println(String.format("%(.3f", monthSalary))
+
+    //Рассчитываем отклонение от среднего оклада
+
+    val listSalary = ListBuffer[Double](100, 150, 200, 80, 120, 75)
+    val meanSalary = listSalary.sum / listSalary.size
+    val deviation = ((monthSalary / meanSalary) * 100) - 100
+    println(String.format("%(.2f", deviation) + " %")
+
+// Добавляем в список новую зрплату
+
+    val newSalary = meanSalary + 6.5
+    listSalary += newSalary
+    val maxSalary = listSalary.max
+    val minSalary = listSalary.min
+    println("MAX: " + maxSalary +", MIN: " + minSalary)
+
+    //Добавляем два значения и сортируем список
+
+    listSalary += (350, 90)
+    val newListSalary = listSalary.sorted
+    println(newListSalary)
+
+   //Добавим новое значение под индексом 6
+    newListSalary.insert(6, 130)
+    println(newListSalary)
+
+    // Задаем вилку зарплат для уровня middle
+
+    println("Введите минимальную зарплату для уровня middle")
+    val x = readDouble()
+    println("Введите максимальную зарплату для уровня middle")
+    val y = readDouble()
+
+    // Находим соответствующий индекс (номер сотрудника) в списке зарплат и выводим его
+
+    for (n <- newListSalary)
+      {
+        if ( (n >= x) && (n <= y) )
+          println (newListSalary indexOf n)
+
+      }
+// Индексируем зарплаты на 7 процентов
+    for ((i, index )  <- newListSalary.zipWithIndex)
+      {
+        val wageIndex = i +(i * 7 / 100)
+        println (String.format("%(.3f", wageIndex))
+      }
+
+
+  }
+}
