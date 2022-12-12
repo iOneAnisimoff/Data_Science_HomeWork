@@ -1,0 +1,31 @@
+A
+
+SELECT lastname FROM employees
+	 WHERE salary = (SELECT MAX(salary) FROM employees)
+———————————————————
+B
+
+SELECT lastname FROM employees 
+	ORDER BY lastname
+——————————————————
+C
+
+SELECT employee_level, 
+	ROUND(AVG (CURRENT_DATE-start_work)/365, 2) as средний_стаж_лет
+		FROM employees  GROUP BY employee_level
+————————————————————————————————
+
+D
+
+SELECT lastname, department FROM employees 
+	LEFT JOIN departments ON employees.department_id = departments.id
+——————————————————————————
+E
+
+SELECT department, lastname, salary FROM
+
+(SELECT lastname, salary,department_id FROM employees
+	WHERE salary IN (SELECT  MAX(salary) FROM employees 
+		GROUP BY department_id)) as top_salary
+		
+LEFT JOIN departments ON top_salary.department_id = departments.id
